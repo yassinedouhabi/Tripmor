@@ -1,37 +1,70 @@
+import Image from "next/image";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
+import { MapPin, ArrowRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+
+const featuredCity = {
+  name: "Marrakech",
+  trips: 12,
+  image: "https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=800&q=80",
+  description: "The Red City — souks, palaces & desert gateways",
+};
 
 const cities = [
-  { name: "Marrakech", trips: 12 },
-  { name: "Fes", trips: 8 },
-  { name: "Casablanca", trips: 6 },
-  { name: "Chefchaouen", trips: 5 },
-  { name: "Agadir", trips: 7 },
-  { name: "Essaouira", trips: 4 },
-  { name: "Merzouga", trips: 6 },
-  { name: "Ouarzazate", trips: 5 },
+  { name: "Chefchaouen", trips: 5, image: "https://images.unsplash.com/photo-1528702748617-c64d49f918af?w=600&q=75" },
+  { name: "Fes", trips: 8, image: "https://images.unsplash.com/photo-1606814893907-2f7aef6e00b3?w=600&q=75" },
+  { name: "Merzouga", trips: 6, image: "https://images.unsplash.com/photo-1548013146-52088f05e898?w=600&q=75" },
+  { name: "Essaouira", trips: 4, image: "https://images.unsplash.com/photo-1594640571672-bdb34c9f1c87?w=600&q=75" },
 ];
+
+const otherCities = ["Casablanca", "Agadir", "Ouarzazate", "Rabat", "Tangier", "Ifrane"];
 
 export default function CityShowcase() {
   return (
     <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-      <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">Popular Cities</h2>
-      <p className="mt-2 text-gray-500">Discover transport options across Morocco</p>
+      <div className="flex items-end justify-between mb-8">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Popular Cities</h2>
+          <p className="mt-1 text-muted-foreground">Discover transport options across Morocco</p>
+        </div>
+        <Link href="/trips" className="hidden sm:flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+          All cities <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
+      </div>
 
-      <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-        {cities.map(({ name, trips }) => (
-          <Link
-            key={name}
-            href={`/cities/${name.toLowerCase().replace(/\s+/g, "-")}`}
-            className="group flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 transition-all hover:border-teal-200 hover:shadow-sm"
-          >
-            <MapPin className="h-5 w-5 shrink-0 text-teal-600" />
-            <div>
-              <p className="font-medium text-gray-900 group-hover:text-teal-700 transition-colors">
-                {name}
-              </p>
-              <p className="text-xs text-gray-500">{trips} trips</p>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        {/* Featured large city */}
+        <Link href="/cities/marrakech" className="col-span-2 row-span-2 group relative rounded-xl overflow-hidden h-64 lg:h-auto">
+          <Image src={featuredCity.image} alt={featuredCity.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-zinc-950/20 to-transparent" />
+          <div className="absolute bottom-4 left-4 right-4">
+            <Badge className="mb-2 bg-accent text-accent-foreground border-0">{featuredCity.trips} trips</Badge>
+            <p className="text-lg font-bold text-white">{featuredCity.name}</p>
+            <p className="text-xs text-zinc-300 mt-0.5">{featuredCity.description}</p>
+          </div>
+        </Link>
+
+        {/* Photo cities */}
+        {cities.map(({ name, trips, image }) => (
+          <Link key={name} href={`/cities/${name.toLowerCase()}`} className="group relative rounded-xl overflow-hidden h-32">
+            <Image src={image} alt={name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 to-transparent" />
+            <div className="absolute bottom-3 left-3">
+              <p className="text-sm font-semibold text-white">{name}</p>
+              <p className="text-xs text-zinc-300">{trips} trips</p>
             </div>
+          </Link>
+        ))}
+
+        {/* Text-only remaining cities */}
+        {otherCities.map((city) => (
+          <Link
+            key={city}
+            href={`/cities/${city.toLowerCase()}`}
+            className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 text-sm font-medium text-foreground hover:bg-muted/50 hover:border-primary/30 transition-colors"
+          >
+            <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
+            {city}
           </Link>
         ))}
       </div>

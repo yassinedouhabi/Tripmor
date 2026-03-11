@@ -1,8 +1,10 @@
-export default function Spinner({ size = "md", className = "" }) {
+import { cn } from "@/lib/utils";
+
+export default function Spinner({ size = "md", className }) {
   const sizes = { sm: "h-4 w-4", md: "h-6 w-6", lg: "h-8 w-8" };
   return (
     <svg
-      className={`animate-spin text-teal-700 ${sizes[size]} ${className}`}
+      className={cn("animate-spin text-primary", sizes[size], className)}
       viewBox="0 0 24 24"
       fill="none"
     >

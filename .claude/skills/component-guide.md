@@ -1,207 +1,53 @@
 # Component Guide — Tripmor
 
-Complete reference for every component in the Tripmor design system.
-
-## Table of Contents
-
-1. UI Primitives (Button, Input, Select, Badge, Modal, Spinner, EmptyState)
-2. Layout Components (Navbar, Footer, WhatsAppButton, Sidebar)
-3. Trip Components (TripCard, TripGrid, TripFilter, TripGallery, StarRating)
-4. Booking Components (BookingForm, BookingSummary)
-5. Homepage Sections (HeroSection, CategoryCards, FeaturedTrips, HowItWorks, CityShowcase, TrustSignals)
-6. Dashboard Components (StatsCard, DataTable, ApprovalCard, EarningsChart)
+Complete reference for every component. All use shadcn/ui primitives and CSS variable-based colors.
 
 ---
 
-## 1. UI Primitives
+## 1. UI Primitives (shadcn/ui — do not edit)
 
-### Button
+Installed via `npx shadcn@latest add <component>`:
 
-```jsx
-// components/ui/Button.jsx
-import { forwardRef } from "react";
+- `components/ui/button.tsx`
+- `components/ui/input.tsx`
+- `components/ui/card.tsx`
+- `components/ui/badge.tsx`
+- `components/ui/select.tsx`
+- `components/ui/label.tsx`
+- `components/ui/separator.tsx`
+- `components/ui/dialog.tsx`
 
-const variants = {
-  primary: "bg-amber-500 text-white hover:bg-amber-600",
-  secondary: "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50",
-  teal: "bg-teal-700 text-white hover:bg-teal-800",
-  danger: "bg-red-600 text-white hover:bg-red-700",
-  ghost: "text-gray-600 hover:bg-gray-100",
-};
-
-const sizes = {
-  sm: "px-3 py-1.5 text-sm",
-  md: "px-5 py-2.5 text-sm",
-  lg: "px-6 py-3 text-base",
-};
-
-const Button = forwardRef(function Button(
-  { variant = "primary", size = "md", className = "", children, ...props },
-  ref
-) {
-  return (
-    <button
-      ref={ref}
-      className={`inline-flex items-center justify-center rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-});
-
-export default Button;
-```
-
-### Input
+### EmptyState (custom)
 
 ```jsx
-// components/ui/Input.jsx
-import { forwardRef } from "react";
+// components/ui/EmptyState.jsx
+import { cn } from "@/lib/utils";
 
-const Input = forwardRef(function Input(
-  { label, error, className = "", ...props },
-  ref
-) {
+export default function EmptyState({ icon: Icon, title, description, action, className }) {
   return (
-    <div>
-      {label && (
-        <label className="mb-1 block text-sm font-medium text-gray-700">
-          {label}
-        </label>
-      )}
-      <input
-        ref={ref}
-        className={`w-full rounded-lg border px-4 py-3 text-gray-900 placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-1 ${
-          error
-            ? "border-red-300 focus:border-red-500 focus:ring-red-500"
-            : "border-gray-200 focus:border-teal-500 focus:ring-teal-500"
-        } ${className}`}
-        {...props}
-      />
-      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
-    </div>
-  );
-});
-
-export default Input;
-```
-
-### Select
-
-```jsx
-// components/ui/Select.jsx
-import { forwardRef } from "react";
-
-const Select = forwardRef(function Select(
-  { label, error, options = [], placeholder, className = "", ...props },
-  ref
-) {
-  return (
-    <div>
-      {label && (
-        <label className="mb-1 block text-sm font-medium text-gray-700">
-          {label}
-        </label>
-      )}
-      <select
-        ref={ref}
-        className={`w-full rounded-lg border border-gray-200 px-4 py-3 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500 ${className}`}
-        {...props}
-      >
-        {placeholder && (
-          <option value="" disabled>{placeholder}</option>
-        )}
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
-        ))}
-      </select>
-      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
-    </div>
-  );
-});
-
-export default Select;
-```
-
-### Badge
-
-```jsx
-// components/ui/Badge.jsx
-const variants = {
-  default: "bg-gray-100 text-gray-700",
-  teal: "bg-teal-50 text-teal-700",
-  amber: "bg-amber-50 text-amber-700",
-  success: "bg-green-50 text-green-700",
-  warning: "bg-amber-50 text-amber-700",
-  danger: "bg-red-50 text-red-700",
-};
-
-export default function Badge({ variant = "default", className = "", children }) {
-  return (
-    <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${variants[variant]} ${className}`}>
-      {children}
-    </span>
-  );
-}
-```
-
-### Modal
-
-```jsx
-// components/ui/Modal.jsx
-"use client";
-
-import { useEffect } from "react";
-import { X } from "lucide-react";
-
-export default function Modal({ isOpen, onClose, title, children }) {
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => { document.body.style.overflow = "unset"; };
-  }, [isOpen]);
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/50" onClick={onClose} />
-      {/* Content */}
-      <div className="relative w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-          <button
-            onClick={onClose}
-            className="rounded-lg p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
-            aria-label="Close"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-        <div className="mt-4">{children}</div>
-      </div>
+    <div className={cn(
+      "flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-border px-6 py-16 text-center",
+      className
+    )}>
+      {Icon && <Icon className="h-12 w-12 text-muted-foreground/40" />}
+      <h3 className="mt-4 text-lg font-semibold text-foreground">{title}</h3>
+      {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
+      {action && <div className="mt-6">{action}</div>}
     </div>
   );
 }
 ```
 
-### Spinner
+### Spinner (custom)
 
 ```jsx
 // components/ui/Spinner.jsx
-export default function Spinner({ size = "md", className = "" }) {
+import { cn } from "@/lib/utils";
+
+export default function Spinner({ size = "md", className }) {
   const sizes = { sm: "h-4 w-4", md: "h-6 w-6", lg: "h-8 w-8" };
   return (
-    <svg
-      className={`animate-spin text-teal-700 ${sizes[size]} ${className}`}
-      viewBox="0 0 24 24"
-      fill="none"
-    >
+    <svg className={cn("animate-spin text-primary", sizes[size], className)} viewBox="0 0 24 24" fill="none">
       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
     </svg>
@@ -209,104 +55,16 @@ export default function Spinner({ size = "md", className = "" }) {
 }
 ```
 
-### EmptyState
-
-```jsx
-// components/ui/EmptyState.jsx
-export default function EmptyState({ icon: Icon, title, description, action }) {
-  return (
-    <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 px-6 py-16 text-center">
-      {Icon && <Icon className="h-12 w-12 text-gray-300" />}
-      <h3 className="mt-4 text-lg font-semibold text-gray-900">{title}</h3>
-      {description && <p className="mt-1 text-sm text-gray-500">{description}</p>}
-      {action && <div className="mt-6">{action}</div>}
-    </div>
-  );
-}
-```
-
 ---
 
-## 2. Layout Components
-
-### WhatsAppButton
-
-```jsx
-// components/layout/WhatsAppButton.jsx
-import { MessageCircle } from "lucide-react";
-
-export default function WhatsAppButton({ phone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER }) {
-  return (
-    <a
-      href={`https://wa.me/${phone}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white shadow-lg transition-transform hover:scale-110"
-      aria-label="Chat on WhatsApp"
-    >
-      <MessageCircle className="h-7 w-7" />
-    </a>
-  );
-}
-```
-
-### Sidebar (Dashboard)
-
-```jsx
-// Pattern for dashboard sidebar
-// components/provider/ProviderSidebar.jsx
-"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { LayoutDashboard, Map, Calendar, DollarSign, Settings } from "lucide-react";
-
-const navItems = [
-  { href: "/provider", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/provider/trips", label: "My Trips", icon: Map },
-  { href: "/provider/bookings", label: "Bookings", icon: Calendar },
-  { href: "/provider/earnings", label: "Earnings", icon: DollarSign },
-  { href: "/provider/settings", label: "Settings", icon: Settings },
-];
-
-export default function ProviderSidebar() {
-  const pathname = usePathname();
-
-  return (
-    <aside className="hidden w-64 shrink-0 border-r border-gray-200 bg-white lg:block">
-      <nav className="flex flex-col gap-1 p-4">
-        {navItems.map(({ href, label, icon: Icon }) => {
-          const isActive = pathname === href;
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                isActive
-                  ? "bg-teal-50 text-teal-700"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-              }`}
-            >
-              <Icon className="h-5 w-5" />
-              {label}
-            </Link>
-          );
-        })}
-      </nav>
-    </aside>
-  );
-}
-```
-
----
-
-## 3. Trip Components
+## 2. Trip Components
 
 ### StarRating
 
 ```jsx
 // components/trips/StarRating.jsx
 import { Star } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function StarRating({ rating = 0, count, size = "md" }) {
   const sizes = { sm: "h-3.5 w-3.5", md: "h-4 w-4", lg: "h-5 w-5" };
@@ -317,15 +75,65 @@ export default function StarRating({ rating = 0, count, size = "md" }) {
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
-          className={`${sizes[size]} ${
-            star <= Math.round(rating) ? "fill-amber-400 text-amber-400" : "text-gray-200"
-          }`}
+          className={cn(sizes[size], star <= Math.round(rating) ? "fill-accent text-accent" : "text-muted-foreground/30")}
         />
       ))}
       {count !== undefined && (
-        <span className={`ml-1 text-gray-500 ${textSizes[size]}`}>({count})</span>
+        <span className={cn("ml-1 text-muted-foreground", textSizes[size])}>({count})</span>
       )}
     </div>
+  );
+}
+```
+
+### TripCard
+
+```jsx
+// components/trips/TripCard.jsx
+import Link from "next/link";
+import Image from "next/image";
+import { MapPin, Clock, Users } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import StarRating from "@/components/trips/StarRating";
+import { formatPrice } from "@/lib/utils";
+
+export default function TripCard({ trip }) {
+  const { _id, title, shortDescription, images, price, duration, departureCity, destinationCity, maxPassengers, averageRating, totalRatings, category } = trip;
+  const location = destinationCity ? `${departureCity} → ${destinationCity}` : departureCity;
+
+  return (
+    <Link href={`/trips/${_id}`} className="group block">
+      <Card className="h-full overflow-hidden transition-all hover:shadow-md hover:-translate-y-0.5">
+        <div className="relative aspect-[4/3] overflow-hidden">
+          {images?.[0] ? (
+            <Image src={images[0]} alt={title} fill className="object-cover transition-transform duration-300 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+          ) : (
+            <div className="h-full w-full bg-muted flex items-center justify-center">
+              <MapPin className="h-10 w-10 text-muted-foreground/30" />
+            </div>
+          )}
+          <div className="absolute left-3 top-3">
+            <Badge className="capitalize bg-background/90 text-foreground border-0 backdrop-blur-sm shadow-sm">
+              {category?.replace(/-/g, " ")}
+            </Badge>
+          </div>
+        </div>
+        <CardContent className="p-4">
+          <h3 className="font-semibold text-foreground line-clamp-1">{title}</h3>
+          {shortDescription && <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{shortDescription}</p>}
+          <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1"><MapPin className="h-3 w-3 text-primary" />{location}</span>
+            <span className="flex items-center gap-1"><Clock className="h-3 w-3 text-primary" />{duration}</span>
+            <span className="flex items-center gap-1"><Users className="h-3 w-3 text-primary" />Up to {maxPassengers}</span>
+          </div>
+          <div className="mt-3 flex items-center justify-between">
+            <StarRating rating={averageRating} count={totalRatings > 0 ? totalRatings : undefined} size="sm" />
+            <p className="font-semibold text-primary">{formatPrice(price)}</p>
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
 ```
@@ -340,20 +148,11 @@ import { Map } from "lucide-react";
 
 export default function TripGrid({ trips }) {
   if (!trips || trips.length === 0) {
-    return (
-      <EmptyState
-        icon={Map}
-        title="No trips found"
-        description="Try adjusting your filters or check back later for new trips."
-      />
-    );
+    return <EmptyState icon={Map} title="No trips found" description="Try adjusting your filters or check back later." />;
   }
-
   return (
     <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {trips.map((trip) => (
-        <TripCard key={trip._id} trip={trip} />
-      ))}
+      {trips.map((trip) => <TripCard key={trip._id} trip={trip} />)}
     </div>
   );
 }
@@ -361,138 +160,89 @@ export default function TripGrid({ trips }) {
 
 ---
 
-## 5. Homepage Sections
+## 3. Layout Components
 
-### HeroSection Pattern
-
-```jsx
-// components/home/HeroSection.jsx
-// Clean hero with text overlay on gradient (not a stock photo)
-export default function HeroSection() {
-  return (
-    <section className="relative overflow-hidden bg-teal-900 py-24 md:py-32">
-      {/* Subtle pattern/gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-teal-900 via-teal-800 to-teal-900" />
-      <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
-            Explore Morocco,{" "}
-            <span className="text-amber-400">Your Way</span>
-          </h1>
-          <p className="mt-6 text-lg text-teal-100">
-            Book private transfers, day trips, and multi-day tours with trusted
-            local transport companies across Morocco.
-          </p>
-          {/* Search or CTA goes here */}
-        </div>
-      </div>
-    </section>
-  );
-}
-```
-
-### CategoryCards Pattern
+### Sidebar (Dashboard)
 
 ```jsx
-// components/home/CategoryCards.jsx
+// components/provider/ProviderSidebar.jsx
+"use client";
+
 import Link from "next/link";
-import { Car, Compass, Mountain, Calendar } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { LayoutDashboard, Map, Calendar, DollarSign, Settings } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Separator } from "@/components/ui/separator";
 
-const categories = [
-  { name: "Private Transfers", slug: "private-transfers", icon: Car, description: "Airport & city-to-city" },
-  { name: "Day Trips", slug: "day-trips", icon: Compass, description: "One-day guided excursions" },
-  { name: "Multi-Day Tours", slug: "multi-day-tours", icon: Mountain, description: "2+ day adventures" },
-  { name: "Car Rental", slug: "car-rental", icon: Calendar, description: "Car + driver hire" },
+const navItems = [
+  { href: "/provider", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { href: "/provider/trips", label: "My Trips", icon: Map },
+  { href: "/provider/bookings", label: "Bookings", icon: Calendar },
+  { href: "/provider/earnings", label: "Earnings", icon: DollarSign },
+  { href: "/provider/settings", label: "Settings", icon: Settings },
 ];
 
-export default function CategoryCards() {
+export default function ProviderSidebar() {
+  const pathname = usePathname();
+
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-      <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">How do you want to travel?</h2>
-      <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
-        {categories.map(({ name, slug, icon: Icon, description }) => (
-          <Link
-            key={slug}
-            href={`/categories/${slug}`}
-            className="group rounded-xl border border-gray-200 bg-white p-6 text-center transition-all hover:border-teal-200 hover:shadow-md"
-          >
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-teal-50 text-teal-700 transition-colors group-hover:bg-teal-100">
-              <Icon className="h-6 w-6" />
-            </div>
-            <h3 className="mt-4 font-semibold text-gray-900">{name}</h3>
-            <p className="mt-1 text-sm text-gray-500">{description}</p>
-          </Link>
-        ))}
+    <aside className="hidden w-64 shrink-0 border-r border-border bg-background lg:flex flex-col">
+      <div className="p-4 border-b border-border">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-primary-foreground text-xs font-bold">T</div>
+          <span className="font-bold text-foreground">Trip<span className="text-primary">mor</span></span>
+        </Link>
       </div>
-    </section>
+      <nav className="flex flex-col gap-1 p-3 flex-1">
+        {navItems.map(({ href, label, icon: Icon, exact }) => {
+          const isActive = exact ? pathname === href : pathname.startsWith(href);
+          return (
+            <Link
+              key={href}
+              href={href}
+              className={cn(
+                "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                isActive ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              )}
+            >
+              <Icon className="h-4 w-4" />
+              {label}
+            </Link>
+          );
+        })}
+      </nav>
+    </aside>
   );
 }
 ```
 
-### HowItWorks Pattern
-
-```jsx
-// components/home/HowItWorks.jsx
-import { Search, CreditCard, MessageCircle } from "lucide-react";
-
-const steps = [
-  { icon: Search, title: "Choose your trip", description: "Browse transfers, day trips, and tours across Morocco" },
-  { icon: CreditCard, title: "Book & pay securely", description: "Pay online with your card. Instant confirmation." },
-  { icon: MessageCircle, title: "Get WhatsApp confirmation", description: "Receive your booking details and connect with us directly." },
-];
-
-export default function HowItWorks() {
-  return (
-    <section className="bg-gray-50 py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center text-2xl font-bold text-gray-900 md:text-3xl">How it works</h2>
-        <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {steps.map(({ icon: Icon, title, description }, i) => (
-            <div key={title} className="text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-teal-700 text-white">
-                <Icon className="h-6 w-6" />
-              </div>
-              <p className="mt-2 text-sm font-bold text-amber-500">Step {i + 1}</p>
-              <h3 className="mt-2 text-lg font-semibold text-gray-900">{title}</h3>
-              <p className="mt-2 text-sm text-gray-500">{description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-```
-
----
-
-## 6. Dashboard Components
-
-### StatsCard
+### StatsCard (Dashboard)
 
 ```jsx
 // components/admin/StatsCards.jsx
+import { Card, CardContent } from "@/components/ui/card";
+
 export function StatsCard({ label, value, change, icon: Icon }) {
   const isPositive = change && change > 0;
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6">
-      <div className="flex items-center justify-between">
-        <p className="text-sm font-medium text-gray-500">{label}</p>
-        {Icon && (
-          <div className="rounded-lg bg-teal-50 p-2 text-teal-700">
-            <Icon className="h-5 w-5" />
-          </div>
+    <Card>
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-medium text-muted-foreground">{label}</p>
+          {Icon && (
+            <div className="rounded-lg bg-primary/10 p-2 text-primary">
+              <Icon className="h-4 w-4" />
+            </div>
+          )}
+        </div>
+        <p className="mt-2 text-3xl font-bold text-foreground">{value}</p>
+        {change !== undefined && (
+          <p className={cn("mt-1 text-sm", isPositive ? "text-green-600" : "text-destructive")}>
+            {isPositive ? "+" : ""}{change}% from last month
+          </p>
         )}
-      </div>
-      <p className="mt-2 text-3xl font-bold text-gray-900">{value}</p>
-      {change !== undefined && (
-        <p className={`mt-1 text-sm ${isPositive ? "text-green-600" : "text-red-600"}`}>
-          {isPositive ? "+" : ""}{change}% from last month
-        </p>
-      )}
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 ```
@@ -500,32 +250,101 @@ export function StatsCard({ label, value, change, icon: Icon }) {
 ### DataTable Pattern
 
 ```jsx
-// Dashboard table pattern — used for bookings, trips, providers
 // Always wrap in overflow-x-auto for mobile
-<div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+<Card>
   <div className="overflow-x-auto">
     <table className="w-full min-w-[600px]">
       <thead>
-        <tr className="border-b border-gray-200 bg-gray-50">
-          <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Column</th>
+        <tr className="border-b border-border">
+          <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            Column
+          </th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-gray-200">
-        <tr className="hover:bg-gray-50">
-          <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">Data</td>
+      <tbody className="divide-y divide-border">
+        <tr className="hover:bg-muted/50 transition-colors">
+          <td className="whitespace-nowrap px-4 py-3 text-sm text-foreground">Data</td>
         </tr>
       </tbody>
     </table>
   </div>
-</div>
+</Card>
 ```
 
 ---
 
-## Composition Rules
+## 4. Auth Pages Pattern
 
-1. **Homepage:** HeroSection → CategoryCards → FeaturedTrips → HowItWorks → CityShowcase → TrustSignals
-2. **Trip listing page:** TripFilter (client) + TripGrid (server-passed data)
-3. **Trip detail:** TripGallery → Trip info → BookingForm → StarRating
-4. **Dashboard pages:** Sidebar → TopBar → StatsCards → DataTable/Content
-5. **Auth pages:** Centered card with logo above, form inside, link below
+```jsx
+// Centered card layout — (auth)/layout.jsx handles centering
+// Each auth page is a simple card:
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+
+export default function LoginPage() {
+  return (
+    <Card className="w-full max-w-sm">
+      <CardHeader className="text-center">
+        <CardTitle className="text-xl">Welcome back</CardTitle>
+        <p className="text-sm text-muted-foreground">Sign in to your account</p>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div>
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" type="email" placeholder="you@example.com" className="mt-1" />
+        </div>
+        <div>
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" type="password" className="mt-1" />
+        </div>
+        <Button className="w-full">Sign in</Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+---
+
+## 5. Loading Skeletons
+
+Every page with data fetching must have `loading.jsx`:
+
+```jsx
+// Skeleton pattern — animate-pulse gray blocks
+export default function Loading() {
+  return (
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+      <div className="h-9 w-48 animate-pulse rounded-lg bg-muted" />
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {[...Array(6)].map((_, i) => (
+          <div key={i} className="overflow-hidden rounded-xl border border-border">
+            <div className="aspect-[4/3] animate-pulse bg-muted" />
+            <div className="space-y-3 p-4">
+              <div className="h-5 w-3/4 animate-pulse rounded bg-muted" />
+              <div className="h-4 w-1/2 animate-pulse rounded bg-muted" />
+              <div className="flex justify-between">
+                <div className="h-4 w-20 animate-pulse rounded bg-muted" />
+                <div className="h-5 w-24 animate-pulse rounded bg-muted" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## 6. Composition Rules
+
+1. **Homepage:** HeroSection → TrustSignals → CategoryCards → FeaturedTrips → HowItWorks → CityShowcase → Provider CTA
+2. **Trip listing:** TripFilter (client) + TripGrid (server data)
+3. **Trip detail:** Image gallery → Trip info → BookingForm → StarRating list
+4. **Dashboard:** Sidebar + TopBar → StatsCards → DataTable/Content
+5. **Auth pages:** Centered card with logo above (handled by layout)
