@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, MapPin } from "lucide-react";
+import { Search } from "lucide-react";
 import { CITIES, CATEGORIES } from "@/lib/constants";
 
 export default function HeroSection() {
@@ -19,68 +19,56 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative bg-teal-700 text-white overflow-hidden">
-      {/* Background pattern */}
+    <section className="relative overflow-hidden bg-teal-900 py-24 md:py-32">
+      <div className="absolute inset-0 bg-gradient-to-br from-teal-900 via-teal-800 to-teal-900" />
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[length:32px_32px]" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center">
-        <div className="inline-flex items-center gap-2 bg-white/20 text-white text-sm font-medium px-4 py-1.5 rounded-full mb-6">
-          <MapPin size={14} />
-          Morocco&apos;s #1 Tourist Transport Marketplace
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-widest text-amber-400 mb-4">
+            Morocco&apos;s #1 Tourist Transport Marketplace
+          </p>
+          <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
+            Explore Morocco,{" "}
+            <span className="text-amber-400">Your Way</span>
+          </h1>
+          <p className="mt-6 text-lg text-teal-100 max-w-xl">
+            Book private transfers, day trips, and multi-day tours with trusted
+            local transport companies across Morocco.
+          </p>
+
+          <form onSubmit={handleSearch} className="mt-8 flex flex-col sm:flex-row gap-3">
+            <select
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="rounded-lg border-0 bg-white px-4 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 sm:w-48"
+            >
+              <option value="">All cities</option>
+              {CITIES.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="rounded-lg border-0 bg-white px-4 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 sm:w-52"
+            >
+              <option value="">All categories</option>
+              {CATEGORIES.map((cat) => (
+                <option key={cat.slug} value={cat.slug}>{cat.label}</option>
+              ))}
+            </select>
+
+            <button
+              type="submit"
+              className="flex items-center justify-center gap-2 rounded-lg bg-amber-400 hover:bg-amber-500 px-6 py-3 text-sm font-semibold text-gray-900 transition-colors"
+            >
+              <Search className="h-4 w-4" />
+              Search Trips
+            </button>
+          </form>
         </div>
-
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-4">
-          Book Tourist Transport
-          <br />
-          <span className="text-amber-400">Across Morocco</span>
-        </h1>
-
-        <p className="text-lg sm:text-xl text-teal-100 max-w-2xl mx-auto mb-10">
-          Private transfers, day trips, multi-day tours, and car rentals with
-          trusted local providers. Book in minutes, travel with confidence.
-        </p>
-
-        {/* Search bar */}
-        <form
-          onSubmit={handleSearch}
-          className="bg-white rounded-2xl p-2 flex flex-col sm:flex-row gap-2 max-w-2xl mx-auto shadow-xl"
-        >
-          <select
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="flex-1 px-4 py-3 text-gray-700 bg-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
-          >
-            <option value="">All cities</option>
-            {CITIES.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-
-          <div className="w-px bg-gray-200 hidden sm:block self-stretch my-1" />
-
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="flex-1 px-4 py-3 text-gray-700 bg-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
-          >
-            <option value="">All categories</option>
-            {CATEGORIES.map((cat) => (
-              <option key={cat.slug} value={cat.slug}>
-                {cat.label}
-              </option>
-            ))}
-          </select>
-
-          <button
-            type="submit"
-            className="flex items-center justify-center gap-2 bg-teal-700 hover:bg-teal-800 text-white font-semibold px-6 py-3 rounded-xl transition-colors whitespace-nowrap"
-          >
-            <Search size={18} />
-            Search Trips
-          </button>
-        </form>
       </div>
     </section>
   );

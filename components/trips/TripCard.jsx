@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Clock, Users, Star } from "lucide-react";
+import { MapPin, Clock, Users } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import Badge from "@/components/ui/Badge";
+import StarRating from "@/components/trips/StarRating";
 
 export default function TripCard({ trip }) {
   const {
@@ -26,71 +28,52 @@ export default function TripCard({ trip }) {
   return (
     <Link
       href={`/trips/${_id}`}
-      className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 overflow-hidden flex flex-col"
+      className="group block overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-md"
     >
-      {/* Image */}
-      <div className="relative h-48 bg-gray-100 overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden">
         {images?.[0] ? (
           <Image
             src={images[0]}
             alt={title}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-teal-50">
-            <MapPin size={32} className="text-teal-300" />
+          <div className="h-full w-full bg-teal-50 flex items-center justify-center">
+            <MapPin className="h-10 w-10 text-teal-200" />
           </div>
         )}
-        <div className="absolute top-3 left-3">
-          <span className="bg-white/90 text-teal-700 text-xs font-semibold px-2.5 py-1 rounded-full capitalize">
+        <div className="absolute left-3 top-3">
+          <Badge variant="teal" className="capitalize">
             {category?.replace(/-/g, " ")}
-          </span>
+          </Badge>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-4 flex flex-col flex-1">
-        <h3 className="font-semibold text-gray-900 leading-snug mb-1 group-hover:text-teal-700 transition-colors line-clamp-2">
-          {title}
-        </h3>
-
+      <div className="p-4">
+        <h3 className="font-semibold text-gray-900 line-clamp-1">{title}</h3>
         {shortDescription && (
-          <p className="text-sm text-gray-500 mb-3 line-clamp-2">{shortDescription}</p>
+          <p className="mt-1 text-sm text-gray-500 line-clamp-2">{shortDescription}</p>
         )}
 
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500 mb-4">
+        <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-500">
           <span className="flex items-center gap-1">
-            <MapPin size={12} className="text-teal-600" />
-            {location}
+            <MapPin className="h-3 w-3 text-teal-600" />{location}
           </span>
           <span className="flex items-center gap-1">
-            <Clock size={12} className="text-teal-600" />
-            {duration}
+            <Clock className="h-3 w-3 text-teal-600" />{duration}
           </span>
           <span className="flex items-center gap-1">
-            <Users size={12} className="text-teal-600" />
-            Up to {maxPassengers}
+            <Users className="h-3 w-3 text-teal-600" />Up to {maxPassengers}
           </span>
         </div>
 
-        <div className="mt-auto flex items-center justify-between">
-          <div>
-            <span className="text-lg font-bold text-gray-900">
-              {formatPrice(price)}
-            </span>
-            <span className="text-xs text-gray-400 ml-1">/ group</span>
-          </div>
-          {totalRatings > 0 && (
-            <div className="flex items-center gap-1 text-sm">
-              <Star size={14} className="text-amber-400 fill-amber-400" />
-              <span className="font-medium text-gray-700">
-                {averageRating.toFixed(1)}
-              </span>
-              <span className="text-gray-400">({totalRatings})</span>
-            </div>
-          )}
+        <div className="mt-3 flex items-center justify-between">
+          <StarRating rating={averageRating} count={totalRatings > 0 ? totalRatings : undefined} size="sm" />
+          <p className="font-semibold text-teal-700">
+            {formatPrice(price)}
+          </p>
         </div>
       </div>
     </Link>

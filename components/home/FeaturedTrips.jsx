@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import TripCard from "@/components/trips/TripCard";
+import TripGrid from "@/components/trips/TripGrid";
 
 async function getFeaturedTrips() {
   try {
@@ -10,7 +10,7 @@ async function getFeaturedTrips() {
     );
     if (!res.ok) return [];
     const data = await res.json();
-    return data.trips ?? [];
+    return Array.isArray(data) ? data.slice(0, 6) : (data.trips ?? []);
   } catch {
     return [];
   }
@@ -20,42 +20,26 @@ export default async function FeaturedTrips() {
   const trips = await getFeaturedTrips();
 
   return (
-    <section className="bg-gray-50 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-10">
+    <section className="bg-gray-50 py-16 md:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-end justify-between">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900">Featured Trips</h2>
+            <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">Featured Trips</h2>
             <p className="mt-1 text-gray-500">Top-rated trips from verified providers</p>
           </div>
           <Link
             href="/trips"
-            className="hidden sm:flex items-center gap-1.5 text-teal-700 font-medium hover:text-teal-800 transition-colors"
+            className="hidden sm:flex items-center gap-1.5 text-sm font-medium text-teal-700 hover:text-teal-800 transition-colors"
           >
-            View all trips
-            <ArrowRight size={16} />
+            View all <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 
-        {trips.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {trips.map((trip) => (
-              <TripCard key={trip._id} trip={trip} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16 text-gray-400">
-            <p className="text-lg font-medium">Trips coming soon</p>
-            <p className="text-sm mt-1">Check back once providers have listed their services.</p>
-          </div>
-        )}
+        <TripGrid trips={trips} />
 
-        <div className="text-center mt-8 sm:hidden">
-          <Link
-            href="/trips"
-            className="inline-flex items-center gap-1.5 text-teal-700 font-medium"
-          >
-            View all trips
-            <ArrowRight size={16} />
+        <div className="mt-6 text-center sm:hidden">
+          <Link href="/trips" className="inline-flex items-center gap-1.5 text-sm font-medium text-teal-700">
+            View all trips <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </div>

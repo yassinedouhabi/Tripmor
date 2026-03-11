@@ -12,32 +12,26 @@ const cities = [
   { name: "Ouarzazate", trips: 5 },
 ];
 
-function slugify(name) {
-  return name.toLowerCase().replace(/\s+/g, "-");
-}
-
 export default function CityShowcase() {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold text-gray-900">Popular Cities</h2>
-        <p className="mt-2 text-gray-500">Discover transport options across Morocco</p>
-      </div>
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">Popular Cities</h2>
+      <p className="mt-2 text-gray-500">Discover transport options across Morocco</p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {cities.map(({ name, trips }) => (
           <Link
             key={name}
-            href={`/cities/${slugify(name)}`}
-            className="group relative bg-gray-100 hover:bg-teal-50 border border-gray-200 hover:border-teal-300 rounded-2xl p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm"
+            href={`/cities/${name.toLowerCase().replace(/\s+/g, "-")}`}
+            className="group flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 transition-all hover:border-teal-200 hover:shadow-sm"
           >
-            <div className="flex items-center gap-2 mb-2">
-              <MapPin size={16} className="text-teal-600" />
-              <span className="font-semibold text-gray-900 group-hover:text-teal-700 transition-colors">
+            <MapPin className="h-5 w-5 shrink-0 text-teal-600" />
+            <div>
+              <p className="font-medium text-gray-900 group-hover:text-teal-700 transition-colors">
                 {name}
-              </span>
+              </p>
+              <p className="text-xs text-gray-500">{trips} trips</p>
             </div>
-            <p className="text-sm text-gray-500">{trips} trips available</p>
           </Link>
         ))}
       </div>
