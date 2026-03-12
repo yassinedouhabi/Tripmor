@@ -21,14 +21,14 @@ export default async function FeaturedTrips() {
   const trips = await getFeaturedTrips();
 
   return (
-    <section className="bg-muted/40 border-y border-border py-16 md:py-24">
+    <section className="bg-muted/50 border-y border-border py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between">
+        <div className="flex items-end justify-between mb-12 md:mb-16">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Featured Trips</h2>
-            <p className="mt-1 text-muted-foreground">Top-rated trips from verified providers</p>
+            <h2 className="text-3xl md:text-5xl font-heading font-semibold tracking-tight text-foreground">Featured Trips</h2>
+            <p className="mt-3 text-muted-foreground">Top-rated trips from verified providers</p>
           </div>
-          <Button variant="ghost" asChild className="hidden sm:flex text-primary hover:text-primary gap-1">
+          <Button variant="ghost" asChild className="hidden sm:flex text-foreground hover:text-foreground gap-1">
             <Link href="/trips">
               View all <ArrowRight className="h-4 w-4" />
             </Link>

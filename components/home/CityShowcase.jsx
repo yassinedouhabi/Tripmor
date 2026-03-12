@@ -21,25 +21,25 @@ const otherCities = ["Casablanca", "Agadir", "Ouarzazate", "Rabat", "Tangier", "
 
 export default function CityShowcase() {
   return (
-    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-      <div className="flex items-end justify-between mb-8">
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+      <div className="flex items-end justify-between mb-12 md:mb-16">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">Popular Cities</h2>
-          <p className="mt-1 text-muted-foreground">Discover transport options across Morocco</p>
+          <h2 className="text-3xl md:text-5xl font-heading font-semibold tracking-tight text-foreground">Popular Cities</h2>
+          <p className="mt-3 text-muted-foreground">Discover transport options across Morocco</p>
         </div>
-        <Link href="/trips" className="hidden sm:flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+        <Link href="/trips" className="hidden sm:flex items-center gap-1 text-sm font-medium text-foreground hover:underline">
           All cities <ArrowRight className="h-3.5 w-3.5" />
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {/* Featured large city */}
         <Link href="/cities/marrakech" className="col-span-2 row-span-2 group relative rounded-xl overflow-hidden h-64 lg:h-auto">
           <Image src={featuredCity.image} alt={featuredCity.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-zinc-950/20 to-transparent" />
           <div className="absolute bottom-4 left-4 right-4">
             <Badge className="mb-2 bg-accent text-accent-foreground border-0">{featuredCity.trips} trips</Badge>
-            <p className="text-lg font-bold text-white">{featuredCity.name}</p>
+            <p className="text-lg font-heading font-bold text-white">{featuredCity.name}</p>
             <p className="text-xs text-zinc-300 mt-0.5">{featuredCity.description}</p>
           </div>
         </Link>
@@ -61,9 +61,9 @@ export default function CityShowcase() {
           <Link
             key={city}
             href={`/cities/${city.toLowerCase()}`}
-            className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 text-sm font-medium text-foreground hover:bg-muted/50 hover:border-primary/30 transition-colors"
+            className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 text-sm font-medium text-foreground hover:bg-muted/50 hover:border-accent/30 transition-colors"
           >
-            <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
+            <MapPin className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
             {city}
           </Link>
         ))}

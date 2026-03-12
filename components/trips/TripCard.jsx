@@ -28,7 +28,7 @@ export default function TripCard({ trip }) {
 
   return (
     <Link href={`/trips/${_id}`} className="group block">
-      <Card className="h-full overflow-hidden transition-all hover:shadow-md hover:-translate-y-0.5">
+      <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
         <div className="relative aspect-[4/3] overflow-hidden">
           {images?.[0] ? (
             <Image
@@ -51,26 +51,26 @@ export default function TripCard({ trip }) {
         </div>
 
         <CardContent className="p-4">
-          <h3 className="font-semibold text-foreground line-clamp-1 leading-snug">{title}</h3>
+          <h3 className="font-heading font-semibold text-foreground line-clamp-1 leading-snug">{title}</h3>
           {shortDescription && (
             <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{shortDescription}</p>
           )}
 
           <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
             <span className="flex items-center gap-1">
-              <MapPin className="h-3 w-3 text-primary" />{location}
+              <MapPin className="h-3 w-3 text-muted-foreground" />{location}
             </span>
             <span className="flex items-center gap-1">
-              <Clock className="h-3 w-3 text-primary" />{duration}
+              <Clock className="h-3 w-3 text-muted-foreground" />{duration}
             </span>
             <span className="flex items-center gap-1">
-              <Users className="h-3 w-3 text-primary" />Up to {maxPassengers}
+              <Users className="h-3 w-3 text-muted-foreground" />Up to {maxPassengers}
             </span>
           </div>
 
           <div className="mt-3 flex items-center justify-between">
             <StarRating rating={averageRating} count={totalRatings > 0 ? totalRatings : undefined} size="sm" />
-            <p className="font-semibold text-primary">
+            <p className="font-bold text-foreground">
               {formatPrice(price)}
             </p>
           </div>

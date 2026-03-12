@@ -21,7 +21,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative h-[620px] flex items-center overflow-hidden">
+    <section className="relative min-h-[700px] flex items-center overflow-hidden">
       <Image
         src="https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1800&q=85"
         alt="Aerial view of Marrakech medina"
@@ -29,18 +29,18 @@ export default function HeroSection() {
         className="object-cover"
         priority
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 via-zinc-950/60 to-zinc-950/10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
 
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-4">
             Morocco&apos;s #1 Transport Marketplace
           </p>
-          <h1 className="text-5xl font-bold tracking-tight text-white sm:text-6xl leading-tight mb-5">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold tracking-tight text-white leading-tight mb-5">
             Explore Morocco,{" "}
             <span className="text-accent">Your Way</span>
           </h1>
-          <p className="text-lg text-zinc-300 mb-10 leading-relaxed">
+          <p className="text-lg md:text-xl text-zinc-300 mb-10 leading-relaxed">
             Book private transfers, day trips, and multi-day tours with trusted
             local transport companies across Morocco.
           </p>

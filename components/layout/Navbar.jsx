@@ -23,11 +23,11 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-primary-foreground text-xs font-bold">
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-foreground text-background text-xs font-bold">
               T
             </div>
             <span className="font-bold text-foreground">
-              Trip<span className="text-primary">mor</span>
+              Trip<span className="text-accent">mor</span>
             </span>
           </Link>
 
@@ -58,7 +58,7 @@ export default function Navbar() {
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="gap-2"
                 >
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-foreground">
                     <User className="h-3.5 w-3.5" />
                   </div>
                   <span className="text-sm">{session.user.name?.split(" ")[0]}</span>
@@ -89,7 +89,7 @@ export default function Navbar() {
                 <Button variant="ghost" size="sm" asChild>
                   <Link href="/auth/login">Log in</Link>
                 </Button>
-                <Button size="sm" asChild>
+                <Button size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90" asChild>
                   <Link href="/auth/register">Sign up</Link>
                 </Button>
               </>
@@ -141,7 +141,7 @@ export default function Navbar() {
               <Button variant="outline" size="sm" className="flex-1" asChild>
                 <Link href="/auth/login" onClick={() => setMenuOpen(false)}>Log in</Link>
               </Button>
-              <Button size="sm" className="flex-1" asChild>
+              <Button size="sm" className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90" asChild>
                 <Link href="/auth/register" onClick={() => setMenuOpen(false)}>Sign up</Link>
               </Button>
             </div>

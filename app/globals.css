@@ -21,29 +21,30 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --font-heading: var(--font-playfair);
 }
 
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.442 0.101 174.5);
+  --card-foreground: oklch(0.145 0 0);
+  --muted: oklch(0.965 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.769 0.164 70.08);
 
-  /* Tripmor brand — Deep Teal primary */
-  --primary: oklch(0.442 0.101 174.5);
-  --primary-foreground: oklch(0.985 0 0);
+  /* Monochrome primary — black */
+  --primary: oklch(0.145 0 0);
+  --primary-foreground: oklch(1 0 0);
 
-  /* Amber accent */
+  /* Gold accent */
   --accent: oklch(0.769 0.164 70.08);
-  --accent-foreground: oklch(0.141 0.005 285.823);
+  --accent-foreground: oklch(0.145 0 0);
 
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --secondary: oklch(0.965 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
 
   --radius: 0.625rem;

@@ -1,5 +1,4 @@
 import { Users, MapPin, Star, ShieldCheck } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 const stats = [
   { icon: Users, value: "500+", label: "Happy Tourists" },
@@ -13,13 +12,13 @@ export default function TrustSignals() {
     <section className="border-y border-border bg-muted/40 py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-center gap-0 divide-x divide-border">
-          {stats.map(({ icon: Icon, value, label }, i) => (
+          {stats.map(({ icon: Icon, value, label }) => (
             <div key={label} className="flex items-center gap-3 px-8 py-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted text-accent">
                 <Icon className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-xl font-bold text-foreground">{value}</p>
+                <p className="font-heading text-2xl font-bold text-foreground">{value}</p>
                 <p className="text-xs text-muted-foreground">{label}</p>
               </div>
             </div>

@@ -15,17 +15,17 @@ Think Airbnb, but for tourist transport in Morocco.
 
 ### Business Model
 
-- **Commission per booking:** Percentage TBD (to be decided before launch)
-- **Premium subscription:** Not in MVP — planned for future (featured listings, analytics, priority placement)
+- **Commission per booking:** 10%
+- **Premium subscription:** Not in MVP — planned for future.
 - **Revenue split:** Tourist pays full price → Tripmor takes commission → Provider receives the rest
 
 ### User Roles
 
-| Role     | Description                                                   |
-|----------|---------------------------------------------------------------|
-| Tourist  | Browses trips, books as guest OR with account, pays, rates    |
-| Provider | Signs up, lists trips, manages bookings, sees earnings        |
-| Admin    | Approves providers & trips, manages platform, sees all data   |
+| Role     | Description                                                 |
+| -------- | ----------------------------------------------------------- |
+| Tourist  | Browses trips, books as guest OR with account, pays, rates  |
+| Provider | Signs up, lists trips, manages bookings, sees earnings      |
+| Admin    | Approves providers & trips, manages platform, sees all data |
 
 ### Tourist Account System
 
@@ -34,11 +34,13 @@ Tourists have **two options at checkout:**
 1. **Continue as Guest** — fill in name, email, pickup details, and pay (no account needed)
 2. **Login / Create Account** — login with existing account or create one, then checkout with pre-filled info
 
-**Account creation methods:** Email + password, or Google login
+**Account creation methods:** Email + password, Google login
 
 **Benefits of a tourist account:**
+
 - Pre-filled checkout info (name, email) for faster booking
 - View past bookings history
+- save info for other bookings
 
 ### Core Flow
 
@@ -60,18 +62,18 @@ Approve Providers → Approve Trips → Monitor Bookings → Track Revenue
 
 ## Tech Stack
 
-| Layer          | Technology                | Notes                                    |
-|----------------|---------------------------|------------------------------------------|
-| Framework      | Next.js 14+ (App Router)  | SSR for SEO, API routes for backend      |
-| Language       | JavaScript                |                                          |
-| Styling        | Tailwind CSS              | Mobile-first, responsive                 |
-| Database       | MongoDB Atlas             | Free tier (512MB)                        |
-| ODM            | Mongoose                  | Schema validation                        |
-| Payment        | Stripe (test mode for MVP)| Stripe Connect for marketplace payouts   |
-| Auth           | NextAuth.js               | Provider login + Admin login             |
-| WhatsApp       | wa.me/ links              | Floating button + booking confirmation   |
-| Deployment     | Vercel                    | Free tier                                |
-| Image Storage  | Cloudinary (free tier)    | Trip photos, provider logos              |
+| Layer         | Technology                 | Notes                                  |
+| ------------- | -------------------------- | -------------------------------------- |
+| Framework     | Next.js 14+ (App Router)   | SSR for SEO, API routes for backend    |
+| Language      | JavaScript                 |                                        |
+| Styling       | Tailwind CSS               | Mobile-first, responsive               |
+| Database      | MongoDB Atlas              | Free tier (512MB)                      |
+| ODM           | Mongoose                   | Schema validation                      |
+| Payment       | Stripe (test mode for MVP) | Stripe Connect for marketplace payouts |
+| Auth          | NextAuth.js                | Provider login + Admin login           |
+| WhatsApp      | wa.me/ links               | Floating button + booking confirmation |
+| Deployment    | Vercel                     | Free tier                              |
+| Image Storage | Cloudinary (free tier)     | Trip photos, provider logos            |
 
 ---
 
@@ -346,49 +348,49 @@ tripmor/
 
 ### Public (No auth required)
 
-| Method | Endpoint                    | Purpose                               |
-|--------|-----------------------------|---------------------------------------|
-| GET    | /api/trips                  | List all approved + active trips      |
-| GET    | /api/trips/[id]             | Get single trip with ratings          |
-| POST   | /api/stripe/checkout        | Create Stripe Checkout session        |
-| POST   | /api/stripe/webhook         | Stripe payment webhook                |
+| Method | Endpoint             | Purpose                          |
+| ------ | -------------------- | -------------------------------- |
+| GET    | /api/trips           | List all approved + active trips |
+| GET    | /api/trips/[id]      | Get single trip with ratings     |
+| POST   | /api/stripe/checkout | Create Stripe Checkout session   |
+| POST   | /api/stripe/webhook  | Stripe payment webhook           |
 
 ### Provider (Auth: provider role)
 
-| Method | Endpoint                    | Purpose                               |
-|--------|-----------------------------|---------------------------------------|
-| GET    | /api/trips?provider=me      | List provider's own trips             |
-| POST   | /api/trips                  | Create new trip (status: pending)     |
-| PUT    | /api/trips/[id]             | Update own trip                       |
-| DELETE | /api/trips/[id]             | Delete own trip                       |
-| GET    | /api/bookings?provider=me   | List provider's bookings              |
-| GET    | /api/bookings/[id]          | Get single booking detail             |
+| Method | Endpoint                  | Purpose                           |
+| ------ | ------------------------- | --------------------------------- |
+| GET    | /api/trips?provider=me    | List provider's own trips         |
+| POST   | /api/trips                | Create new trip (status: pending) |
+| PUT    | /api/trips/[id]           | Update own trip                   |
+| DELETE | /api/trips/[id]           | Delete own trip                   |
+| GET    | /api/bookings?provider=me | List provider's bookings          |
+| GET    | /api/bookings/[id]        | Get single booking detail         |
 
 ### Admin (Auth: admin role)
 
-| Method | Endpoint                    | Purpose                               |
-|--------|-----------------------------|---------------------------------------|
-| GET    | /api/providers              | List all providers                    |
-| GET    | /api/providers/[id]         | Get single provider                   |
-| PUT    | /api/providers/[id]         | Approve/reject/suspend provider       |
-| GET    | /api/trips?status=pending   | List trips pending approval           |
-| PUT    | /api/trips/[id]             | Approve/reject trip                   |
-| GET    | /api/bookings               | List all bookings                     |
-| GET    | /api/admin/stats            | Dashboard statistics                  |
-| GET    | /api/admin/revenue          | Revenue & commission data             |
+| Method | Endpoint                  | Purpose                         |
+| ------ | ------------------------- | ------------------------------- |
+| GET    | /api/providers            | List all providers              |
+| GET    | /api/providers/[id]       | Get single provider             |
+| PUT    | /api/providers/[id]       | Approve/reject/suspend provider |
+| GET    | /api/trips?status=pending | List trips pending approval     |
+| PUT    | /api/trips/[id]           | Approve/reject trip             |
+| GET    | /api/bookings             | List all bookings               |
+| GET    | /api/admin/stats          | Dashboard statistics            |
+| GET    | /api/admin/revenue        | Revenue & commission data       |
 
 ### Auth
 
-| Method | Endpoint                    | Purpose                               |
-|--------|-----------------------------|---------------------------------------|
-| POST   | /api/providers              | Register new provider                 |
-| POST   | /api/auth/[...nextauth]     | NextAuth login/session                |
+| Method | Endpoint                | Purpose                |
+| ------ | ----------------------- | ---------------------- |
+| POST   | /api/providers          | Register new provider  |
+| POST   | /api/auth/[...nextauth] | NextAuth login/session |
 
 ### Rating
 
-| Method | Endpoint                    | Purpose                               |
-|--------|-----------------------------|---------------------------------------|
-| POST   | /api/trips/[id]/rate        | Submit star rating (1-5)              |
+| Method | Endpoint             | Purpose                  |
+| ------ | -------------------- | ------------------------ |
+| POST   | /api/trips/[id]/rate | Submit star rating (1-5) |
 
 ---
 
@@ -396,55 +398,55 @@ tripmor/
 
 ### Public Pages (Tourist-facing)
 
-| Route                    | Page                  | Description                                    |
-|--------------------------|-----------------------|------------------------------------------------|
-| /                        | Homepage              | Hero, search, categories, featured trips, CTA  |
-| /trips                   | All Trips             | Filterable grid of all approved trips          |
-| /trips/[id]              | Trip Detail           | Photos, info, ratings, booking form, price     |
-| /categories/[slug]       | Category Page         | Trips filtered by category                     |
-| /cities/[slug]           | City Page             | Trips filtered by city                         |
-| /booking/success         | Booking Confirmation  | Thank you + WhatsApp info + rate prompt        |
-| /about                   | About Tripmor         | Platform story, mission, trust signals         |
-| /how-it-works            | How It Works          | 3-step visual guide for tourists               |
-| /become-a-provider       | Provider Landing      | CTA for transport companies to join            |
-| /contact                 | Contact               | WhatsApp link, email, form                     |
-| /faq                     | FAQ                   | Common questions                               |
+| Route              | Page                 | Description                                   |
+| ------------------ | -------------------- | --------------------------------------------- |
+| /                  | Homepage             | Hero, search, categories, featured trips, CTA |
+| /trips             | All Trips            | Filterable grid of all approved trips         |
+| /trips/[id]        | Trip Detail          | Photos, info, ratings, booking form, price    |
+| /categories/[slug] | Category Page        | Trips filtered by category                    |
+| /cities/[slug]     | City Page            | Trips filtered by city                        |
+| /booking/success   | Booking Confirmation | Thank you + WhatsApp info + rate prompt       |
+| /about             | About Tripmor        | Platform story, mission, trust signals        |
+| /how-it-works      | How It Works         | 3-step visual guide for tourists              |
+| /become-a-provider | Provider Landing     | CTA for transport companies to join           |
+| /contact           | Contact              | WhatsApp link, email, form                    |
+| /faq               | FAQ                  | Common questions                              |
 
 ### Auth Pages
 
-| Route                    | Page                  | Description                                    |
-|--------------------------|-----------------------|------------------------------------------------|
-| /auth/login              | Login                 | All roles: email/password + Google login       |
-| /auth/register           | Register              | Provider registration OR tourist signup        |
+| Route          | Page     | Description                              |
+| -------------- | -------- | ---------------------------------------- |
+| /auth/login    | Login    | All roles: email/password + Google login |
+| /auth/register | Register | Provider registration OR tourist signup  |
 
 ### Tourist Account (Auth: tourist)
 
-| Route                    | Page                  | Description                                    |
-|--------------------------|-----------------------|------------------------------------------------|
-| /account                 | My Account            | Profile overview, name, email                  |
-| /account/bookings        | My Bookings           | Past booking history with trip details         |
+| Route             | Page        | Description                            |
+| ----------------- | ----------- | -------------------------------------- |
+| /account          | My Account  | Profile overview, name, email          |
+| /account/bookings | My Bookings | Past booking history with trip details |
 
 ### Provider Dashboard (Auth: provider)
 
-| Route                    | Page                  | Description                                    |
-|--------------------------|-----------------------|------------------------------------------------|
-| /provider                | Dashboard             | Overview: bookings, earnings, trip stats       |
-| /provider/trips          | My Trips              | List of provider's trips + status              |
-| /provider/trips/new      | Add Trip              | Form to create new trip                        |
-| /provider/trips/[id]/edit| Edit Trip             | Edit existing trip                             |
-| /provider/bookings       | My Bookings           | All bookings for provider's trips              |
-| /provider/earnings       | Earnings              | Revenue breakdown, payout history              |
-| /provider/settings       | Settings              | Profile, company info, WhatsApp number         |
+| Route                     | Page        | Description                              |
+| ------------------------- | ----------- | ---------------------------------------- |
+| /provider                 | Dashboard   | Overview: bookings, earnings, trip stats |
+| /provider/trips           | My Trips    | List of provider's trips + status        |
+| /provider/trips/new       | Add Trip    | Form to create new trip                  |
+| /provider/trips/[id]/edit | Edit Trip   | Edit existing trip                       |
+| /provider/bookings        | My Bookings | All bookings for provider's trips        |
+| /provider/earnings        | Earnings    | Revenue breakdown, payout history        |
+| /provider/settings        | Settings    | Profile, company info, WhatsApp number   |
 
 ### Admin Dashboard (Auth: admin)
 
-| Route                    | Page                  | Description                                    |
-|--------------------------|-----------------------|------------------------------------------------|
-| /admin                   | Dashboard             | Platform stats, recent activity                |
-| /admin/providers         | Manage Providers      | Approve/reject/suspend providers               |
-| /admin/trips             | Manage Trips          | Approve/reject trip listings                   |
-| /admin/bookings          | All Bookings          | Every booking on the platform                  |
-| /admin/revenue           | Revenue               | Total revenue, commission earned, charts        |
+| Route            | Page             | Description                              |
+| ---------------- | ---------------- | ---------------------------------------- |
+| /admin           | Dashboard        | Platform stats, recent activity          |
+| /admin/providers | Manage Providers | Approve/reject/suspend providers         |
+| /admin/trips     | Manage Trips     | Approve/reject trip listings             |
+| /admin/bookings  | All Bookings     | Every booking on the platform            |
+| /admin/revenue   | Revenue          | Total revenue, commission earned, charts |
 
 ---
 
@@ -489,7 +491,7 @@ PLATFORM_NAME=Tripmor
 - **Providers:** Credentials (email + password) + Google OAuth
 - **Roles:** tourist, provider, admin
 - **Session strategy:** JWT
-- **Middleware:** Protect /provider/*, /admin/*, /account/* routes
+- **Middleware:** Protect /provider/_, /admin/_, /account/\* routes
 
 ### Route Protection
 
@@ -515,7 +517,7 @@ PLATFORM_NAME=Tripmor
    - Success URL: /booking/success?session_id={CHECKOUT_SESSION_ID}
    - Cancel URL: /trips/[id]
 4. Tourist is redirected to Stripe Checkout (hosted page)
-5. Tourist pays with test card
+5. Tourist pays with test card in development
 6. Stripe sends webhook to /api/stripe/webhook
 7. Webhook handler:
    - Creates Booking in database
@@ -575,12 +577,11 @@ Decline: 4000 0000 0000 0002
 
 ## Design Direction
 
-- **Style:** Clean, modern, Airbnb-inspired
-- **Primary Color:** Deep Teal (#0F766E) — trust, travel, professionalism
-- **Accent Color:** Amber (#F59E0B) — warmth, Morocco, CTAs and highlights
-- **Typography:** Inter (via Tailwind default) or similar clean sans-serif
+- **Style:** Clean, modern, premium
+- **Primary Color:** we will decide later
+- **Accent Color:** we will decide later
+- **Typography:** we will decide later
 - **Mobile-first:** Tourists browse on phones
-- **WhatsApp button:** Floating bottom-right on every page (green)
 - **Trust signals:** Ratings, number of trips, provider verification badge
 
 ---
@@ -639,13 +640,24 @@ stripe listen --forward-to localhost:3000/api/stripe/webhook
 ## Notes
 
 - MVP first — launch fast, iterate based on real feedback
-- No tax on bookings (prices are final)
+- No tax on bookings (prices are final), montion the commission.
 - Tourists can book as guest OR create an account (email/password or Google)
 - Tourist accounts enable: past bookings view + pre-filled checkout
 - Cancellations handled manually via WhatsApp for now
 - Star ratings only (no written reviews in MVP)
 - Stripe test mode for MVP — switch to live when ready
 - Douhabi Transport Touristique is the first provider
-- All trip prices are set by providers in MAD
+- All trip prices are set by providers in MAD, and we will add the currency switcher in the future
 - Commission rate stored in env variable for easy adjustment
-- Brand colors: Deep Teal (#0F766E) + Amber (#F59E0B)
+- Brand colors: we will decide later
+
+## important notes
+
+- After major changes, please update this file (@CLAUDE.md), keep this file up-to-date with the project's status
+- I want you to hire 2 teams (frontend / backend), and for each team we mentiend before hire team for every task. for example: there is a task for frontend team, the frontend team hire team with sub-agents for that task: like UI Design Team and so on
+- hire a team for deployment to vercel you will run it after every push to main branch
+- and I want to undertand this project for learning fullstack development, so you will hire a team for teatching and explanition. you will teach and explain every task you do
+- on frontend when we finish a task use devtools mcp to test
+- each team create own milstones and for each milstones tasks on folder name it (team milestones / or better name), for each team create tasks.md file
+- REMEMBER TO USE SKILLS NEEDED ON SKILLS FOLDER
+- REMEMBER TO WORK WITH TEAMS ON PARALELL TO SAVE TIME

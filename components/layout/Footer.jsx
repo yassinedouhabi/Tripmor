@@ -26,18 +26,18 @@ const links = {
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400">
+    <footer className="bg-zinc-950 text-zinc-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
 
           {/* Brand */}
           <div>
             <Link href="/" className="inline-flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-teal-600 flex items-center justify-center">
-                <span className="text-white text-sm font-bold">T</span>
+              <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+                <span className="text-zinc-950 text-sm font-bold">T</span>
               </div>
               <span className="text-lg font-bold text-white">
-                Trip<span className="text-teal-400">mor</span>
+                Trip<span className="text-accent">mor</span>
               </span>
             </Link>
             <p className="text-sm leading-relaxed mb-5">
@@ -56,7 +56,7 @@ export default function Footer() {
               </a>
               <a
                 href="mailto:hello@tripmor.com"
-                className="inline-flex items-center gap-2 hover:text-gray-200 transition-colors"
+                className="inline-flex items-center gap-2 hover:text-zinc-200 transition-colors"
               >
                 <Mail size={15} />
                 hello@tripmor.com
@@ -75,7 +75,7 @@ export default function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-sm hover:text-gray-200 transition-colors"
+                      className="text-sm hover:text-zinc-200 transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -86,7 +86,7 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 pt-6 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <div className="mt-12 pt-6 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
           <p>© {new Date().getFullYear()} Tripmor. All rights reserved.</p>
           <p>Morocco&apos;s trusted tourist transport marketplace.</p>
         </div>

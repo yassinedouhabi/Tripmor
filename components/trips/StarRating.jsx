@@ -10,12 +10,12 @@ export default function StarRating({ rating = 0, count, size = "md" }) {
         <Star
           key={star}
           className={`${sizes[size]} ${
-            star <= Math.round(rating) ? "fill-amber-400 text-amber-400" : "text-gray-200"
+            star <= Math.round(rating) ? "fill-amber-400 text-amber-400" : "text-border"
           }`}
         />
       ))}
       {count !== undefined && (
-        <span className={`ml-1 text-gray-500 ${textSizes[size]}`}>({count})</span>
+        <span className={`ml-1 text-muted-foreground ${textSizes[size]}`}>({count})</span>
       )}
     </div>
   );

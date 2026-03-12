@@ -29,7 +29,7 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-zinc-950/85" />
         <div className="relative mx-auto max-w-2xl px-4 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white">
+          <h2 className="text-3xl md:text-5xl font-heading font-semibold tracking-tight text-white">
             Are you a transport provider?
           </h2>
           <p className="mt-4 text-lg text-zinc-300">

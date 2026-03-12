@@ -11,22 +11,22 @@ const categories = [
 
 export default function CategoryCards() {
   return (
-    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-      <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+      <h2 className="text-3xl md:text-5xl font-heading font-semibold tracking-tight text-foreground">
         How do you want to travel?
       </h2>
-      <p className="mt-2 text-muted-foreground">Choose a category to find the right trip for you.</p>
+      <p className="mt-3 text-muted-foreground">Choose a category to find the right trip for you.</p>
 
-      <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
+      <div className="mt-12 md:mt-16 grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
         {categories.map(({ name, slug, icon: Icon, description }) => (
           <Link key={slug} href={`/categories/${slug}`}>
-            <Card className="group h-full transition-all hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
-              <CardContent className="flex flex-col items-center text-center p-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
+            <Card className="group h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
+              <CardContent className="flex flex-col items-center text-center p-6 md:p-8">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-muted text-accent transition-colors">
                   <Icon className="h-6 w-6" />
                 </div>
-                <h3 className="mt-4 font-semibold text-foreground text-sm leading-snug">{name}</h3>
-                <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+                <h3 className="mt-4 font-heading text-lg font-semibold text-foreground leading-snug">{name}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{description}</p>
               </CardContent>
             </Card>
           </Link>
